@@ -41,7 +41,9 @@ export default function App() {
     lang === 'ar'
       ? 'مرحباً فريق MAGHCO، أرغب في توفير: [اسم المنتج]. الكمية: [ ]. الوجهة: [ ].'
       : 'Hello MAGHCO Team, I\'m interested in sourcing: [product name]. Quantity: [ ]. Destination: [ ].';
-  const mailtoLink = `mailto:Sales@app:MAGHCO.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  // ✅ FIXED: send to sales@maghco.sa (and remove invalid "app:" part)
+  const mailtoLink = `mailto:sales@maghco.sa?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
   const year = new Date().getFullYear();
 
@@ -177,7 +179,7 @@ export default function App() {
               <div key={idx} className="cap-card">
                 <div className="cap-icon">
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M4 7h16M6 12h12M8 17h8" stroke="#9fb2c9" strokeWidth="1.4" strokeLinecap="round"/>
+                    <path d="M4 7h16M6 12h12M8 17h8" stroke="#9fb2c9" strokeWidth="1.4" strokeLinecap="round" />
                   </svg>
                 </div>
                 <h3 className="cap-title">{title}</h3>
@@ -197,8 +199,8 @@ export default function App() {
               <div key={idx} className={`partner-card ${idx === 1 ? 'emphasis' : ''}`}>
                 <div className="partner-icon">
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9" stroke="#9fb2c9" strokeWidth="1.2"/>
-                    <path d="M7 12l3 3 7-7" stroke="#9fb2c9" strokeWidth="1.6" strokeLinecap="round"/>
+                    <circle cx="12" cy="12" r="9" stroke="#9fb2c9" strokeWidth="1.2" />
+                    <path d="M7 12l3 3 7-7" stroke="#9fb2c9" strokeWidth="1.6" strokeLinecap="round" />
                   </svg>
                 </div>
                 <h3 className="partner-title">{p.title}</h3>
@@ -243,6 +245,7 @@ export default function App() {
             <h3 id="moreCtaTitle" className="modal-title">{dict.moreCta.title}</h3>
             <p id="moreCtaBody" className="modal-body">{dict.moreCta.body}</p>
             <div className="modal-actions">
+              {/* ✅ uses the fixed mailtoLink */}
               <a href={mailtoLink} className="btn">{dict.moreCta.primary}</a>
               <button className="btn btn-secondary" onClick={() => setIsMoreOpen(false)}>
                 {dict.moreCta.close}
@@ -256,9 +259,12 @@ export default function App() {
       <section id="contact" className="contact panel" aria-label="Contact">
         <div className="container">
           <h2 className="section-title">{dict.contact.title}</h2>
-          <div className="contact-email">{dict.common.email}</div>
 
-          <a className="btn" href="mailto:Sales@app:MAGHCO.com">
+          {/* ✅ show the exact email */}
+          <div className="contact-email">sales@maghco.sa</div>
+
+          {/* ✅ FIXED: exact recipient */}
+          <a className="btn" href={mailtoLink}>
             {dict.contact.button}
           </a>
         </div>
